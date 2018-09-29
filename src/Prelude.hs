@@ -89,7 +89,7 @@ module Prelude (
 
   , Data
   , Typeable
-#if MIN_VERSION_base_noprelude(4,5,0)
+#if MIN_VERSION_base(4,5,0)
   , Generic
 #endif
 
@@ -205,22 +205,22 @@ import           Text.Read
 import           GHC.Base
 import           GHC.Enum
 import           GHC.Float
-#if MIN_VERSION_base_noprelude(4,5,0)
+#if MIN_VERSION_base(4,5,0)
 import           GHC.Generics                 (Generic)
 #endif
 import           GHC.Num
 import           GHC.Real
 import           GHC.Show
 
-#if MIN_VERSION_base_noprelude(4,8,0)
+#if MIN_VERSION_base(4,8,0)
 import           Data.List                    (uncons)
 #endif
 
-#if !MIN_VERSION_base_noprelude(4,7,0)
+#if !MIN_VERSION_base(4,7,0)
 import           GHC.Err                      (undefined)
 #endif
 
-#if !MIN_VERSION_base_noprelude(4,6,0)
+#if !MIN_VERSION_base(4,6,0)
 import           Text.ParserCombinators.ReadP as P
 #endif
 
@@ -253,7 +253,7 @@ liftA5 :: Applicative f => (a -> b -> c -> d -> e -> g) -> f a -> f b -> f c -> 
 liftA5 f a b c d e = liftA4 f a b c d <*> e
 
 
-#if !MIN_VERSION_base_noprelude(4,10,0)
+#if !MIN_VERSION_base(4,10,0)
 fromLeft :: a -> Either a b -> a
 fromLeft _ (Left a) = a
 fromLeft a _        = a
@@ -263,12 +263,12 @@ fromRight _ (Right b) = b
 fromRight b _         = b
 #endif
 
-#if !MIN_VERSION_base_noprelude(4,9,0)
+#if !MIN_VERSION_base(4,9,0)
 errorWithoutStackTrace :: String -> a
 errorWithoutStackTrace = error
 #endif
 
-#if !MIN_VERSION_base_noprelude(4,8,0)
+#if !MIN_VERSION_base(4,8,0)
 infixl 1 &
 
 (&) :: a -> (a -> b) -> b
@@ -290,7 +290,7 @@ uncons []     = Nothing
 uncons (x:xs) = Just (x, xs)
 #endif
 
-#if !MIN_VERSION_base_noprelude(4,7,0)
+#if !MIN_VERSION_base(4,7,0)
 isRight, isLeft :: Either a b -> Bool
 isRight (Left  _) = False
 isRight (Right _) = True
@@ -308,7 +308,7 @@ x $> y = y <$ x
 
 -- | Parse using the 'Read' instance. Succeeds if there's a unique valid parse; returns 'Nothing' otherwise.
 read :: Read a => String -> Maybe a
-#if !MIN_VERSION_base_noprelude(4,6,0)
+#if !MIN_VERSION_base(4,6,0)
 read s = case [ x | (x,"") <- readPrec_to_S read' minPrec s ] of
            [x] -> Just x
            _   -> Nothing
